@@ -1,0 +1,64 @@
+using System;
+
+public class Character
+{
+    public string Name { get; set; }
+    public int Health{ get; set; }
+    public int Attack { get; set; }
+    public int Defense { get; set; }
+
+    public bool IsAlive()
+    {
+        return Health > 0;
+    }
+
+    public void Attack(Character target)
+    {
+        int damage = Attack - target.Defense;
+        if (damage > 0)
+        {
+            target.Health -= damage;
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Character allmighty = new Character
+        {
+            Name = "allmighty",
+            Health = 400,
+            Attack = 100,
+            Defense = 90
+        };
+
+        Character allforone = new Character
+        {
+            Name = "allforone",
+            Health = 300,
+            Attack = 35,
+            Defense = 88
+        };
+
+        while (allmighty.IsAlive() && allforone.IsAlive())
+        {
+            allmighty.Attack(allforone);
+            if (!allforone.IsAlive())
+            {
+                Console.WriteLine($"{allmighty.Name} has won!");
+                break;
+            }
+
+            allforone.Attack(allmighty);
+            if (!allmighty.IsAlive())
+            {
+                Console.WriteLine($"{allforone.Name} has won!");
+                break;
+            }
+        }
+
+        Console.ReadLine();
+    }
+}
